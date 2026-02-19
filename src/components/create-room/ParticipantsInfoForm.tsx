@@ -3,6 +3,7 @@ import { adaptive } from "@toss/tds-colors";
 import { Button, ListRow, TextField, Top } from "@toss/tds-mobile";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import type { RoomFormValues } from "../../schemas/createRoomSchema";
+import { formatRatio } from "../../utils/format";
 
 export default function ParticipantsInfoForm() {
   const { control } = useFormContext<RoomFormValues>();
@@ -18,6 +19,11 @@ export default function ParticipantsInfoForm() {
           <Top.TitleParagraph size={22} color={adaptive.grey900}>
             {"게임에 참여할\n인원 수와 정산 비율을 정해요"}
           </Top.TitleParagraph>
+        }
+        subtitleBottom={
+          <Top.SubtitleParagraph>
+            10명까지 참여할 수 있어요
+          </Top.SubtitleParagraph>
         }
       />
       {fields.map((item, index) => (
@@ -40,8 +46,12 @@ export default function ParticipantsInfoForm() {
                     variant="line"
                     suffix="%"
                     inputMode="numeric"
-                    value={field.value}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    placeholder="0"
+                    value={field.value || ""}
+                    onChange={(e) => {
+                      const formattedRatio = formatRatio(e);
+                      field.onChange(formattedRatio);
+                    }}
                   />
                 )}
               />
@@ -62,26 +72,28 @@ export default function ParticipantsInfoForm() {
           verticalPadding="large"
         />
       ))}
-      <ListRow
-        left={
-          <ListRow.AssetIcon
-            shape="original"
-            name="icon-plus-grey-fill"
-            variant="fill"
-          />
-        }
-        contents={
-          <ListRow.Texts
-            type="1RowTypeA"
-            top="추가하기"
-            topProps={{ color: adaptive.grey700 }}
-            aria-label="게임 인원 추가 버튼"
-          />
-        }
-        verticalPadding="large"
-        withTouchEffect={true}
-        onClick={() => append({ ratio: 30 })}
-      />
+      {fields.length < 10 && (
+        <ListRow
+          left={
+            <ListRow.AssetIcon
+              shape="original"
+              name="icon-plus-grey-fill"
+              variant="fill"
+            />
+          }
+          contents={
+            <ListRow.Texts
+              type="1RowTypeA"
+              top="추가하기"
+              topProps={{ color: adaptive.grey700 }}
+              aria-label="게임 인원 추가 버튼"
+            />
+          }
+          verticalPadding="large"
+          withTouchEffect={true}
+          onClick={() => append({ ratio: 0 })}
+        />
+      )}
     </>
   );
 }

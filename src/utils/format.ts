@@ -26,3 +26,12 @@ export const formatAccountNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
 
   return formatted;
 };
+
+// 비율 포매팅
+export const formatRatio = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onlyNumber = e.target.value.replace(/[^0-9]/g, "");
+  if (!onlyNumber) return 0;
+
+  const numericValue = Math.min(Number(onlyNumber), 100);
+  return numericValue;
+};
