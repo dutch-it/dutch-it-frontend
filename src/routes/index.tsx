@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { adaptive } from "@toss/tds-colors";
 import { Asset, BottomCTA, Stepper, StepperRow, Top } from "@toss/tds-mobile";
+import { PageContainer } from "../styles/global";
 
 export const Route = createFileRoute("/")({
   component: IntroPage,
@@ -15,7 +16,7 @@ function IntroPage() {
   };
 
   return (
-    <main>
+    <PageContainer>
       <IntroContainer>
         <Top
           title={
@@ -86,7 +87,7 @@ function IntroPage() {
       <BottomCTA fixed={true} onClick={onStartClick}>
         시작하기
       </BottomCTA>
-    </main>
+    </PageContainer>
   );
 }
 

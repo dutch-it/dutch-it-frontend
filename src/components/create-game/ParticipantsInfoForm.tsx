@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 import { adaptive } from "@toss/tds-colors";
 import { Button, ListRow, TextField, Top } from "@toss/tds-mobile";
-import { useState } from "react";
+import { Controller, useFieldArray, useFormContext } from "react-hook-form";
+import type { GameFormValues } from "../../schemas/createGameSchema";
 
 export default function ParticipantsInfoForm() {
-  const [participants] = useState<{ ratio: number }[]>([
-    { ratio: 20 },
-    { ratio: 30 },
-    { ratio: 50 },
-  ]);
+  const { control } = useFormContext<GameFormValues>();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "participants",
+  });
 
   return (
     <>
@@ -19,8 +20,9 @@ export default function ParticipantsInfoForm() {
           </Top.TitleParagraph>
         }
       />
-      {participants.map((participant, index) => (
+      {fields.map((item, index) => (
         <ListRow
+          key={item.id}
           left={
             <ListRow.Texts
               type="1RowTypeC"
@@ -30,17 +32,29 @@ export default function ParticipantsInfoForm() {
           }
           contents={
             <RatioInputContainer>
-              <TextField
-                variant="line"
-                placeholder="비율"
-                value={participant.ratio}
-                suffix="%"
+              <Controller
+                name={`participants.${index}.ratio`}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    variant="line"
+                    suffix="%"
+                    inputMode="numeric"
+                    value={field.value}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                  />
+                )}
               />
             </RatioInputContainer>
           }
           right={
             index + 1 >= 3 && (
-              <Button color="danger" variant="weak" size="small">
+              <Button
+                color="danger"
+                variant="weak"
+                size="small"
+                onClick={() => remove(index)}
+              >
                 삭제
               </Button>
             )
@@ -65,6 +79,8 @@ export default function ParticipantsInfoForm() {
           />
         }
         verticalPadding="large"
+        withTouchEffect={true}
+        onClick={() => append({ ratio: 30 })}
       />
     </>
   );

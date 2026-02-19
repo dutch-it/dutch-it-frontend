@@ -5,8 +5,16 @@ import {
 } from "@tanstack/react-router";
 import { BottomCTA, CTAButton } from "@toss/tds-mobile";
 import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import GameInfoForm from "../components/create-game/GameInfoForm";
 import ParticipantsInfoForm from "../components/create-game/ParticipantsInfoForm";
+import {
+  createGameSchema,
+  type GameFormValues,
+} from "../schemas/createGameSchema";
+import { DEFAULT_GAME_FORM } from "../consts/create-game";
+import { PageContainer } from "../styles/global";
 
 export const Route = createFileRoute("/create-game")({
   component: CreateGamePage,
@@ -32,10 +40,18 @@ function CreateGamePage() {
       });
   };
 
+  const methods = useForm<GameFormValues>({
+    resolver: zodResolver(createGameSchema),
+    mode: "onChange",
+    defaultValues: DEFAULT_GAME_FORM,
+  });
+
   return (
-    <main>
-      {step === 1 && <GameInfoForm />}
-      {step === 2 && <ParticipantsInfoForm />}
+    <PageContainer>
+      <FormProvider {...methods}>
+        {step === 1 && <GameInfoForm />}
+        {step === 2 && <ParticipantsInfoForm />}
+      </FormProvider>
 
       <BottomCTA.Double
         fixed={true}
@@ -50,6 +66,6 @@ function CreateGamePage() {
           </CTAButton>
         }
       />
-    </main>
+    </PageContainer>
   );
 }
