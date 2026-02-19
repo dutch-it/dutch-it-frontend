@@ -7,10 +7,10 @@ import {
   NumericSpinner,
 } from "@toss/tds-mobile";
 import { Controller, useFormContext } from "react-hook-form";
-import type { GameFormValues } from "../../schemas/createGameSchema";
+import type { RoomFormValues } from "../../schemas/createRoomSchema";
 
 export default function GameInfoForm() {
-  const { control } = useFormContext<GameFormValues>();
+  const { control } = useFormContext<RoomFormValues>();
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { useFormContext, useWatch } from "react-hook-form";
-import type { GameFormValues } from "../../schemas/createGameSchema";
-import { ACCOUNT_REGEX } from "../../consts/create-game";
+import type { RoomFormValues } from "../../schemas/createRoomSchema";
+import { ACCOUNT_REGEX } from "../../consts/create-room";
 import { CTAButton } from "@toss/tds-mobile";
 
 export default function NextStepButton({
@@ -10,7 +10,7 @@ export default function NextStepButton({
   step: 1 | 2;
   onRightClick: () => void;
 }) {
-  const { control } = useFormContext<GameFormValues>();
+  const { control } = useFormContext<RoomFormValues>();
 
   const totalAmount = useWatch({ control, name: "totalAmount" });
   const accountNumber = useWatch({ control, name: "accountNumber" });

@@ -2,10 +2,10 @@ import styled from "@emotion/styled";
 import { adaptive } from "@toss/tds-colors";
 import { Button, ListRow, TextField, Top } from "@toss/tds-mobile";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
-import type { GameFormValues } from "../../schemas/createGameSchema";
+import type { RoomFormValues } from "../../schemas/createRoomSchema";
 
 export default function ParticipantsInfoForm() {
-  const { control } = useFormContext<GameFormValues>();
+  const { control } = useFormContext<RoomFormValues>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "participants",

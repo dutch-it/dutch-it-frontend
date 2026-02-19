@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const createGameSchema = z.object({
+export const createRoomSchema = z.object({
   // 정산 관련 정보
   totalAmount: z
     .number({ error: "총 정산 금액을 입력해주세요." })
@@ -27,4 +27,4 @@ export const createGameSchema = z.object({
   ),
 });
 
-export type GameFormValues = z.infer<typeof createGameSchema>;
+export type RoomFormValues = z.infer<typeof createRoomSchema>;

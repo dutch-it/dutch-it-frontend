@@ -12,7 +12,7 @@ function IntroPage() {
   const navigate = useNavigate();
 
   const onStartClick = () => {
-    navigate({ to: "/create-game" });
+    navigate({ to: "/create-room" });
   };
 
   return (

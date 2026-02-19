@@ -7,21 +7,21 @@ import { BottomCTA, CTAButton } from "@toss/tds-mobile";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ParticipantsInfoForm from "../components/create-game/ParticipantsInfoForm";
+import ParticipantsInfoForm from "../components/create-room/ParticipantsInfoForm";
 import {
-  createGameSchema,
-  type GameFormValues,
-} from "../schemas/createGameSchema";
-import { DEFAULT_GAME_FORM } from "../consts/create-game";
+  createRoomSchema,
+  type RoomFormValues,
+} from "../schemas/createRoomSchema";
+import { DEFAULT_ROOM_FORM } from "../consts/create-room";
 import { PageContainer } from "../styles/global";
-import RoomInfoForm from "../components/create-game/RoomInfoForm";
-import NextStepButton from "../components/create-game/NextStepButton";
+import RoomInfoForm from "../components/create-room/RoomInfoForm";
+import NextStepButton from "../components/create-room/NextStepButton";
 
-export const Route = createFileRoute("/create-game")({
-  component: CreateGamePage,
+export const Route = createFileRoute("/create-room")({
+  component: CreateRoomPage,
 });
 
-function CreateGamePage() {
+function CreateRoomPage() {
   const router = useRouter();
   const navigate = useNavigate();
 
@@ -35,16 +35,16 @@ function CreateGamePage() {
     // todo) API로 받아온 id로 이동하게 수정 필요
     else
       navigate({
-        to: "/game/$gameId",
-        params: { gameId: "abc" },
+        to: "/room/$roomId",
+        params: { roomId: "abc" },
         replace: true,
       });
   };
 
-  const methods = useForm<GameFormValues>({
-    resolver: zodResolver(createGameSchema),
+  const methods = useForm<RoomFormValues>({
+    resolver: zodResolver(createRoomSchema),
     mode: "onChange",
-    defaultValues: DEFAULT_GAME_FORM,
+    defaultValues: DEFAULT_ROOM_FORM,
   });
 
   return (

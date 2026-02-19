@@ -3,8 +3,8 @@ import { adaptive } from "@toss/tds-colors";
 import { BottomSheet, GridList, ListHeader, TextField } from "@toss/tds-mobile";
 import { Controller, useFormContext } from "react-hook-form";
 import { useState } from "react";
-import type { GameFormValues } from "../../schemas/createGameSchema";
-import { BANK_LIST } from "../../consts/create-game";
+import type { RoomFormValues } from "../../schemas/createRoomSchema";
+import { BANK_LIST } from "../../consts/create-room";
 import { chunkArray } from "../../utils/array";
 import { formatAccountNumber, formatNumber } from "../../utils/format";
 
@@ -14,7 +14,7 @@ export default function SettlementInfoForm() {
     setValue,
     watch,
     formState: { errors },
-  } = useFormContext<GameFormValues>();
+  } = useFormContext<RoomFormValues>();
 
   const [isBankSelectionOpen, setIsBankSelectionOpen] = useState(false);
 

@@ -9,13 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as CreateGameRouteImport } from './routes/create-game'
+import { Route as CreateRoomRouteImport } from './routes/create-room'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as GameGameIdRouteImport } from './routes/game/$gameId'
+import { Route as RoomRoomIdRouteImport } from './routes/room/$roomId'
 
-const CreateGameRoute = CreateGameRouteImport.update({
-  id: '/create-game',
-  path: '/create-game',
+const CreateRoomRoute = CreateRoomRouteImport.update({
+  id: '/create-room',
+  path: '/create-room',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -23,49 +23,49 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GameGameIdRoute = GameGameIdRouteImport.update({
-  id: '/game/$gameId',
-  path: '/game/$gameId',
+const RoomRoomIdRoute = RoomRoomIdRouteImport.update({
+  id: '/room/$roomId',
+  path: '/room/$roomId',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/create-game': typeof CreateGameRoute
-  '/game/$gameId': typeof GameGameIdRoute
+  '/create-room': typeof CreateRoomRoute
+  '/room/$roomId': typeof RoomRoomIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/create-game': typeof CreateGameRoute
-  '/game/$gameId': typeof GameGameIdRoute
+  '/create-room': typeof CreateRoomRoute
+  '/room/$roomId': typeof RoomRoomIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/create-game': typeof CreateGameRoute
-  '/game/$gameId': typeof GameGameIdRoute
+  '/create-room': typeof CreateRoomRoute
+  '/room/$roomId': typeof RoomRoomIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create-game' | '/game/$gameId'
+  fullPaths: '/' | '/create-room' | '/room/$roomId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create-game' | '/game/$gameId'
-  id: '__root__' | '/' | '/create-game' | '/game/$gameId'
+  to: '/' | '/create-room' | '/room/$roomId'
+  id: '__root__' | '/' | '/create-room' | '/room/$roomId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CreateGameRoute: typeof CreateGameRoute
-  GameGameIdRoute: typeof GameGameIdRoute
+  CreateRoomRoute: typeof CreateRoomRoute
+  RoomRoomIdRoute: typeof RoomRoomIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/create-game': {
-      id: '/create-game'
-      path: '/create-game'
-      fullPath: '/create-game'
-      preLoaderRoute: typeof CreateGameRouteImport
+    '/create-room': {
+      id: '/create-room'
+      path: '/create-room'
+      fullPath: '/create-room'
+      preLoaderRoute: typeof CreateRoomRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -75,11 +75,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/game/$gameId': {
-      id: '/game/$gameId'
-      path: '/game/$gameId'
-      fullPath: '/game/$gameId'
-      preLoaderRoute: typeof GameGameIdRouteImport
+    '/room/$roomId': {
+      id: '/room/$roomId'
+      path: '/room/$roomId'
+      fullPath: '/room/$roomId'
+      preLoaderRoute: typeof RoomRoomIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -87,8 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CreateGameRoute: CreateGameRoute,
-  GameGameIdRoute: GameGameIdRoute,
+  CreateRoomRoute: CreateRoomRoute,
+  RoomRoomIdRoute: RoomRoomIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
