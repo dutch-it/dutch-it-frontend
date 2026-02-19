@@ -156,3 +156,6 @@ export const BANK_LIST: Bank[] = [
     iconUrl: "/assets/banks/sbi.svg",
   },
 ];
+
+// 계좌번호 정규식
+export const ACCOUNT_REGEX = /^\d{3}-\d{4}-\d{6}$/;

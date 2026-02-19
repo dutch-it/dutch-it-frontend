@@ -7,7 +7,6 @@ import { BottomCTA, CTAButton } from "@toss/tds-mobile";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import GameInfoForm from "../components/create-game/GameInfoForm";
 import ParticipantsInfoForm from "../components/create-game/ParticipantsInfoForm";
 import {
   createGameSchema,
@@ -15,6 +14,8 @@ import {
 } from "../schemas/createGameSchema";
 import { DEFAULT_GAME_FORM } from "../consts/create-game";
 import { PageContainer } from "../styles/global";
+import RoomInfoForm from "../components/create-game/RoomInfoForm";
+import NextStepButton from "../components/create-game/NextStepButton";
 
 export const Route = createFileRoute("/create-game")({
   component: CreateGamePage,
@@ -49,23 +50,21 @@ function CreateGamePage() {
   return (
     <PageContainer>
       <FormProvider {...methods}>
-        {step === 1 && <GameInfoForm />}
+        {step === 1 && <RoomInfoForm />}
         {step === 2 && <ParticipantsInfoForm />}
-      </FormProvider>
 
-      <BottomCTA.Double
-        fixed={true}
-        leftButton={
-          <CTAButton color="dark" variant="weak" onClick={onLeftClick}>
-            뒤로
-          </CTAButton>
-        }
-        rightButton={
-          <CTAButton onClick={onRightClick}>
-            {step === 1 ? "다음으로" : "게임 생성"}
-          </CTAButton>
-        }
-      />
+        <BottomCTA.Double
+          fixed={true}
+          leftButton={
+            <CTAButton color="dark" variant="weak" onClick={onLeftClick}>
+              뒤로
+            </CTAButton>
+          }
+          rightButton={
+            <NextStepButton step={step} onRightClick={onRightClick} />
+          }
+        />
+      </FormProvider>
     </PageContainer>
   );
 }
