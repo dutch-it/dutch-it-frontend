@@ -1,7 +1,12 @@
 import styled from "@emotion/styled";
 import { adaptive } from "@toss/tds-colors";
 import { Button, ListRow, TextField, Top } from "@toss/tds-mobile";
-import { Controller, useFieldArray, useFormContext } from "react-hook-form";
+import {
+  Controller,
+  useFieldArray,
+  useFormContext,
+  useWatch,
+} from "react-hook-form";
 import type { RoomFormValues } from "../../schemas/createRoomSchema";
 import { formatRatio } from "../../utils/format";
 
@@ -11,6 +16,7 @@ export default function ParticipantsInfoForm() {
     control,
     name: "participants",
   });
+  const totalAmount = useWatch({ control, name: "totalAmount" });
 
   return (
     <>
@@ -37,25 +43,39 @@ export default function ParticipantsInfoForm() {
             />
           }
           contents={
-            <RatioInputContainer>
-              <Controller
-                name={`participants.${index}.ratio`}
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    variant="line"
-                    suffix="%"
-                    inputMode="numeric"
-                    placeholder="0"
-                    value={field.value || ""}
-                    onChange={(e) => {
-                      const formattedRatio = formatRatio(e);
-                      field.onChange(formattedRatio);
-                    }}
-                  />
-                )}
-              />
-            </RatioInputContainer>
+            <Controller
+              name={`participants.${index}.ratio`}
+              control={control}
+              render={({ field }) => {
+                const currentRatio = Number(field.value) || 0;
+
+                const estimatedPrice = Math.floor(
+                  totalAmount * (currentRatio / 100),
+                );
+
+                return (
+                  <ListContentContainer>
+                    <RatioInputContainer>
+                      <TextField
+                        variant="line"
+                        suffix="%"
+                        inputMode="numeric"
+                        placeholder="0"
+                        value={field.value || ""}
+                        onChange={(e) => {
+                          const formattedRatio = formatRatio(e);
+                          field.onChange(formattedRatio);
+                        }}
+                      />
+                    </RatioInputContainer>
+
+                    <EstimateAmount style={{ color: adaptive.grey500 }}>
+                      {estimatedPrice.toLocaleString()}원
+                    </EstimateAmount>
+                  </ListContentContainer>
+                );
+              }}
+            />
           }
           right={
             index + 1 >= 3 && (
@@ -98,9 +118,20 @@ export default function ParticipantsInfoForm() {
   );
 }
 
+const ListContentContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
 const RatioInputContainer = styled.div`
   display: flex;
   align-items: center;
   width: 120px;
   height: 32px;
+`;
+
+const EstimateAmount = styled.span`
+  font-size: 13px;
+  font-weight: bold;
 `;
