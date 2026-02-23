@@ -2,7 +2,7 @@
 export const formatNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
   const onlyNumber = e.target.value.replace(/[^0-9]/g, "");
   if (!onlyNumber) {
-    return undefined;
+    return null;
   }
 
   const numericValue = Math.min(Number(onlyNumber), 1000000);
