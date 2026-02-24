@@ -1,7 +1,6 @@
 // 게임 초기 정보
 export const DEFAULT_ROOM_FORM = {
   totalAmount: 0,
-  accountNumber: "",
   totalRounds: 3,
   useCamera: true,
   useMic: true,

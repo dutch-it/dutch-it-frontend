@@ -11,6 +11,7 @@ import ParticipantsInfoForm from "../components/create-room/ParticipantsInfoForm
 import {
   createRoomSchema,
   type RoomFormValues,
+  type RoomSubmitValues,
 } from "../schemas/createRoomSchema";
 import { DEFAULT_ROOM_FORM } from "../consts/create-room";
 import { PageContainer } from "../styles/global";
@@ -32,16 +33,21 @@ function CreateRoomPage() {
   };
   const onRightClick = () => {
     if (step === 1) setStep(2);
-    // todo) API로 받아온 id로 이동하게 수정 필요
-    else
-      navigate({
-        to: "/room/$roomId",
-        params: { roomId: "abc" },
-        replace: true,
-      });
+    else methods.handleSubmit(onValid)();
   };
 
-  const methods = useForm<RoomFormValues>({
+  const onValid = (data: RoomSubmitValues) => {
+    // todo) API 통신 로직 추가
+    alert(JSON.stringify(data));
+
+    navigate({
+      to: "/room/$roomId",
+      params: { roomId: "abc" },
+      replace: true,
+    });
+  };
+
+  const methods = useForm<RoomFormValues, unknown, RoomSubmitValues>({
     resolver: zodResolver(createRoomSchema),
     mode: "onChange",
     defaultValues: DEFAULT_ROOM_FORM,
@@ -50,20 +56,22 @@ function CreateRoomPage() {
   return (
     <PageContainer>
       <FormProvider {...methods}>
-        {step === 1 && <RoomInfoForm />}
-        {step === 2 && <ParticipantsInfoForm />}
+        <form>
+          {step === 1 && <RoomInfoForm />}
+          {step === 2 && <ParticipantsInfoForm />}
 
-        <BottomCTA.Double
-          fixed={true}
-          leftButton={
-            <CTAButton color="dark" variant="weak" onClick={onLeftClick}>
-              뒤로
-            </CTAButton>
-          }
-          rightButton={
-            <NextStepButton step={step} onRightClick={onRightClick} />
-          }
-        />
+          <BottomCTA.Double
+            fixed={true}
+            leftButton={
+              <CTAButton color="dark" variant="weak" onClick={onLeftClick}>
+                뒤로
+              </CTAButton>
+            }
+            rightButton={
+              <NextStepButton step={step} onRightClick={onRightClick} />
+            }
+          />
+        </form>
       </FormProvider>
     </PageContainer>
   );
