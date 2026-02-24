@@ -38,7 +38,7 @@ export default function GameInfoForm() {
         }
         right={
           <Controller
-            name="roundCount"
+            name="totalRounds"
             control={control}
             render={({ field }) => (
               <NumericSpinner

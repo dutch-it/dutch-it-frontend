@@ -2,10 +2,10 @@
 export const DEFAULT_ROOM_FORM = {
   totalAmount: 0,
   accountNumber: "",
-  roundCount: 3,
+  totalRounds: 3,
   useCamera: true,
   useMic: true,
-  participants: [{ ratio: 20 }, { ratio: 30 }, { ratio: 50 }],
+  ratios: [{ ratio: 20 }, { ratio: 30 }, { ratio: 50 }],
 };
 
 // 은행 목록 표시용 정보

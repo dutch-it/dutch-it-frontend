@@ -15,16 +15,19 @@ export const createRoomSchema = z.object({
   bankName: z.string().optional(),
 
   // 게임 관련 정보
-  roundCount: z.number().min(1).max(10),
+  totalRounds: z.number().min(1).max(10),
   useCamera: z.boolean(),
   useMic: z.boolean(),
 
-  // 참가자 관련 정보
-  participants: z.array(
-    z.object({
-      ratio: z.number(),
-    }),
-  ),
+  // 등수 별 비율 정보
+  ratios: z
+    .array(
+      z.object({
+        ratio: z.number(),
+      }),
+    )
+    .transform((ratios) => ratios.map((item) => item.ratio)),
 });
 
-export type RoomFormValues = z.infer<typeof createRoomSchema>;
+export type RoomFormValues = z.input<typeof createRoomSchema>;
+export type RoomSubmitValues = z.output<typeof createRoomSchema>;

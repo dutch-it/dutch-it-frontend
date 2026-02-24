@@ -14,7 +14,7 @@ export default function ParticipantsInfoForm() {
   const { control } = useFormContext<RoomFormValues>();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "participants",
+    name: "ratios",
   });
   const totalAmount = useWatch({ control, name: "totalAmount" });
 
@@ -44,7 +44,7 @@ export default function ParticipantsInfoForm() {
           }
           contents={
             <Controller
-              name={`participants.${index}.ratio`}
+              name={`ratios.${index}.ratio`}
               control={control}
               render={({ field }) => {
                 const currentRatio = Number(field.value) || 0;
